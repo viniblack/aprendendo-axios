@@ -23,12 +23,12 @@ export default class PersonList extends React.Component {
     })
       .then(res => {
         const respostas = res.data;
-        console.log(res.data)
         this.setState(respostas);
+        console.log(res.data)
       }).catch(function (error) {
         console.log(error);
       });
-
+    console.log(data)
   }
 
   render() {
@@ -36,9 +36,7 @@ export default class PersonList extends React.Component {
       <div>
         <h1>PUT - AXIOS</h1>
 
-        {console.log(this.state.respostas)}
         {this.state.message}
-
       </div>
     )
   }
