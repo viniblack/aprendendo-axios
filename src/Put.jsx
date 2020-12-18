@@ -1,34 +1,36 @@
-import React, { Component } from "react"
+import React, { Component, } from 'react';
 
 import axios from 'axios';
 
 var data = JSON.stringify({ "StoreKey": "0acf81c56a321cc87126", "AppId": 11, "Active": true, "AccountManager": "ok" });
 
-export default class Put extends Component {
+
+export default class PersonList extends Component {
   constructor(props) {
-    super();
-    this.storeKey = "";
-    this.appId = "";
+    super(props);
+    this.state = {
+      store: '0acf81c56a321cc87126',
+      app: 11,
+    };
+
+    this.handleStoreKey = this.handleStoreKey.bind(this);
+    this.handleAppId = this.handleAppId.bind(this);
+    this._criarResposta = this._criarResposta.bind(this);
   }
 
   handleStoreKey(evento) {
-    evento.stopPropagation();
-    // this.storeKey = evento.target.value
-    // console.log(this.appId);
+    this.setState({ store: evento.target.value })
+    console.log(evento.target.value)
   }
 
   handleAppId(evento) {
-    evento.stopPropagation();
-    // this.appId = evento.target.value
-    // console.log(this.appId);
+    this.setState({ app: evento.target.value })
   }
 
   _criarResposta(evento) {
+    alert(`Esse é a StoreKey ${this.state.store} e esse é o número do App ${this.state.app}`);
     evento.preventDefault();
-    evento.stopPropagation();
-    this.props.criarResposta(this.storeKey, this.appId)
   }
-
 
   componentDidMount() {
     axios({
@@ -37,53 +39,56 @@ export default class Put extends Component {
       headers: {
         'secret-key': 'E7D4AC4F-4074-4944-A0B6-0701C536B0A6',
         'Content-Type': 'application/json',
-        'Cookie': '__cfduid=d612d5dd9870bf5d037f15bac11f7b2471605532402'
       },
-      data: data
+      data: {
+        StoreKey:  this.state.store,
+        AppId: this.state.app,
+      }
     })
       .then(res => {
         const respostas = res.data;
         this.setState(respostas);
         console.log(res.data)
-      })
-      .catch(function (error) {
+      }).catch(function (error) {
         console.log(error);
       });
-    console.log(data)
-  }
 
+  }
   render() {
+
     return (
       <div>
         <h1>PUT - AXIOS II</h1>
         <form
-          // onSubmit={this._criarResposta.bind(this)}
+          onSubmit={this._criarResposta}
         >
-
           <label htmlFor="storeKey">Store Key</label><br />
           <input
             id="storeKey"
             type="text"
             placeholder="StoreKey"
-            // onChange={this.handleStoreKey().bind(this)}
+            onChange={this.handleStoreKey}
+            value={this.state.store}
           />
-
           <br /><br />
-
           <label htmlFor="appId">App Id</label><br />
           <input
             id="appId"
             type="text"
             placeholder="AppId"
-            // onChange={this.handleAppId.bind(this)}
+            onChange={this.handleAppId}
+            value={this.state.app}
           />
           <button className="enviar">
             Send
           </button>
-
         </form>
         {this.state.message}
       </div>
+
+
+
+
     )
   }
 }
