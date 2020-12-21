@@ -1,29 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import Put from './Put';
 
- class App extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      respostas: []
-    }
-  }
-
-  criarResposta(storeKey, appId) {
-    const novaResposta = { storeKey, appId };
-    const novoArrayResposta = [...this.state.respostas, novaResposta]
-    const novaEstado = {
-      respostas: novoArrayResposta
-    }
-    this.setState(novaEstado)
-  }
-
+class App extends Component {
   render() {
     return (
       <section>
-        <Put criarResposta={this.criarResposta.bind(this)} />
+        <Put />
       </section >
     )
   }

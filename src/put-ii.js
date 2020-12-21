@@ -2,8 +2,7 @@ import React, { Component, } from 'react';
 
 import axios from 'axios';
 
-var data = JSON.stringify({ "StoreKey": "0acf81c56a321cc87126", "AppId": 11, "Active": true, "AccountManager": "ok" });
-
+// var data = JSON.stringify({ "StoreKey": "0acf81c56a321cc87126", "AppId": 11, "Active": true, "AccountManager": "ok" });
 
 export default class PersonList extends Component {
   constructor(props) {
@@ -11,13 +10,11 @@ export default class PersonList extends Component {
     this.state = {
       store: '',
       app: '',
-      active: '',
     };
 
     this.handleStoreKey = this.handleStoreKey.bind(this);
     this.handleAppId = this.handleAppId.bind(this);
     this._criarResposta = this._criarResposta.bind(this);
-    this.onValueChange = this.onValueChange.bind(this);
   }
 
   handleStoreKey(evento) {
@@ -27,10 +24,6 @@ export default class PersonList extends Component {
 
   handleAppId(evento) {
     this.setState({ app: evento.target.value })
-  }
-
-  onValueChange(evento) {
-    this.setState({ active: evento.target.value })
   }
 
 
@@ -45,7 +38,6 @@ export default class PersonList extends Component {
       data: {
         StoreKey: this.state.store,
         AppId: this.state.app,
-        Active: this.state.active,
       }
     })
       .then(res => {
@@ -55,7 +47,6 @@ export default class PersonList extends Component {
       }).catch(function (error) {
         console.log(error);
       });
-
   }
 
   _criarResposta(evento) {
@@ -72,7 +63,7 @@ export default class PersonList extends Component {
         <form
           onSubmit={this._criarResposta}
         >
-          <label htmlFor="storeKey">Store Key 0acf81c56a321cc87126</label><br />
+          <label htmlFor="storeKey">Store Key</label><br />
           <input
             id="storeKey"
             type="text"
@@ -89,21 +80,12 @@ export default class PersonList extends Component {
             onChange={this.handleAppId}
             value={this.state.app}
           />
-          <br /><br />
-          <select onChange={this.onValueChange}>
-            <option value="true">Ativo</option>
-            <option value="false">Desativo</option>
-          </select>
-          <br /><br />
           <button className="enviar">
             Send
           </button>
         </form>
         {this.state.message}
       </div>
-
-
-
 
     )
   }
