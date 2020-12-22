@@ -45,7 +45,7 @@ export default class PersonList extends Component {
           const respostas = res.data;
           this.setState(respostas);
           console.log(res.data)
-        }).catch(function (error) {
+        }).catch((error) => {
           console.log(error);
         });
     }
@@ -65,7 +65,6 @@ export default class PersonList extends Component {
 
   onValueChange(evento) {
     this.setState({ active: evento.target.value })
-
   }
 
   _criarResposta(evento) {
@@ -109,7 +108,6 @@ export default class PersonList extends Component {
             <option value="true">Ativo</option>
             <option value="false">Desativo</option>
           </select>
-          <br /><br />
           <button
             className="enviar"
             onSubmit={this.handleSend}

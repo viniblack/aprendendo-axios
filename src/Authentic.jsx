@@ -2,32 +2,63 @@ import React, { Component } from 'react'
 
 import axios from 'axios'
 
-export default class Authentication extends Component {
+export default class PersonList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      username: '',
       password: '',
+      grant_type: 'password',
+      submit: '',
     };
+    // state = {
+    //   resposta: []
+    // }
 
-    this.handleEmail = this.handleEmail.bind(this);
+    this.handleUserName = this.handleUserName.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.enviaFormulario = this.enviaFormulario.bind(this);
   }
 
-  componentWillUpdate
+  componentDidUpdate() {
+    if (this.state.submit !== '') {
+      axios({
+        method: 'post',
+        url: 'http://sandbox.fidelizarmais.com/api/v2/public/admin/auth',
 
-  handleEmail(event) {
-    this.setState({ email: event.target.value });
-    console.log(evento.target.value)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // data: data
+        data: {
+          userName: this.state.username,
+          password: this.state.password,
+          grant_type: this.state.grant_type,
+        }
+      })
+        .then(res => {
+          this.setState({ submit: '' })
+          const respostas = res.data.data.access_token;
+          this.setState({ respostas });
+          console.log(res.data)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
+  handleUserName(event) {
+    this.setState({ username: event.target.value })
   }
 
   handlePassword(event) {
-    this.setState({ password: event.target.value });
-    console.log(evento.target.value)
+    this.setState({ password: event.target.value })
   }
 
   enviaFormulario(event) {
+    this.setState({ submit: true })
+    this.componentDidUpdate()
     event.preventDefault();
   }
 
@@ -35,29 +66,44 @@ export default class Authentication extends Component {
     return (
       <div>
         <h1>Login</h1>
-
-        <form onSubmit={this.enviaFormulario}>
+        <form
+          onSubmit={this.enviaFormulario}
+        >
           <label htmlFor="email">
+            Email laraferreira.coelhoe21090@outlook.com
             <br />
             <input
               id="email"
               type="text"
               placeholder="Email"
-              // onChange{this.} 
-              value={this.state.email}
+              onChange={this.handleUserName}
+              value={this.state.user_name}
             />
           </label>
-
+          <br />
           <label htmlFor="password">
+            Senha 123456
             <br />
             <input
               id="password"
               type="text"
-              // onChange{this.}
+              placeholder="Senha"
+              onChange={this.handlePassword}
               value={this.state.password}
             />
           </label>
+          <br />
+          <button
+            className="enviar"
+            onSubmit={this.handleSend}
+          >
+            Send
+          </button>
         </form>
+        {this.state.respostas}
+        {this.state.message}
+
+
       </div>
     )
   }
