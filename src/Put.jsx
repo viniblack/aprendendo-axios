@@ -20,11 +20,11 @@ export default class PersonList extends Component {
     this.onValueChange = this.onValueChange.bind(this);
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate() {
     if (
-      this.state.store !== '' &&
-      this.state.app !== '' &&
-      this.state.active !== '' &&
+      // this.state.store !== '' &&
+      // this.state.app !== '' &&
+      // this.state.active !== '' &&
       this.state.submit !== ''
     ) {
       axios({
