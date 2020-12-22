@@ -20,9 +20,9 @@ export default class PersonList extends Component {
     this.onValueChange = this.onValueChange.bind(this);
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps) {
     if (
-      this.state.store !== '' &&
+      this.state.store !== prevProps.store &&
       this.state.app !== '' &&
       this.state.active !== '' &&
       this.state.submit !== ''
@@ -41,7 +41,6 @@ export default class PersonList extends Component {
         }
       })
         .then(res => {
-          this.setState({ submit: '' })
           const respostas = res.data;
           this.setState(respostas);
           console.log(res.data)
@@ -69,9 +68,8 @@ export default class PersonList extends Component {
   }
 
   _criarResposta(evento) {
-    this.setState({ submit: true })
-    this.componentDidUpdate()
     evento.preventDefault();
+    this.componentDidUpdate()
   }
 
   render() {
@@ -105,14 +103,13 @@ export default class PersonList extends Component {
           </label>
           <br /><br />
           <select onChange={this.onValueChange}>
-            <option value="">Ativar / Desativar</option>
             <option value="true">Ativo</option>
             <option value="false">Desativo</option>
           </select>
           <br /><br />
           <button
             className="enviar"
-            onSubmit={this.handleSend}
+            onChange={this.handleSend}
           >
             Send
           </button>
