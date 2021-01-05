@@ -11,9 +11,6 @@ export default class PersonList extends Component {
       grant_type: 'password',
       submit: '',
     };
-    // state = {
-    //   resposta: []
-    // }
 
     this.handleUserName = this.handleUserName.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
@@ -102,8 +99,6 @@ export default class PersonList extends Component {
         </form>
         {this.state.respostas}
         {this.state.message}
-
-
       </div>
     )
   }

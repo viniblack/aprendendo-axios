@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-import Put from './Put';
-import Authentic from './Authentic';
+import Method from './Method';
 
 class App extends Component {
   render() {
     return (
       <section>
-        <Authentic />
+        <Method />
       </section >
     )
   }
